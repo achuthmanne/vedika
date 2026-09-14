@@ -1,22 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 const categories = [
-  { id: 1, title: "Weddings & Love", image: "/hero/wedding.jpg" },
-  { id: 2, title: "New Beginnings", image: "/hero/housewarming.jpg" },
-  { id: 3, title: "Baby & Family", image: "/hero/baby.jpg" },
-  { id: 4, title: "Personal Milestones", image: "/hero/anniversary.jpg" },
-  { id: 5, title: "Festivals & Traditions", image: "/hero/festival.jpg" },
-  { id: 6, title: "Events & Gatherings", image: "/hero/friends.jpg" },
-  { id: 7, title: "Special Moments", image: "/hero/tradition.jpg" },
-  { id: 8, title: "Graduations & Success", image: "/hero/graduation.jpg" },
-  { id: 9, title: "Travel & Adventures", image: "/hero/travel.jpg" },
+  { id: 1, title: "Weddings & Love", image: "/hero/wedding.jpg", link: "/occasions/weddings" },
+  { id: 2, title: "New Beginnings", image: "/hero/housewarming.jpg", link: "#" },
+  { id: 3, title: "Baby & Family", image: "/hero/baby.jpg", link: "#" },
+  { id: 4, title: "Personal Milestones", image: "/hero/anniversary.jpg", link: "#" },
+  { id: 5, title: "Festivals & Traditions", image: "/hero/festival.jpg", link: "#" },
+  { id: 6, title: "Events & Gatherings", image: "/hero/friends.jpg", link: "#" },
+  { id: 7, title: "Special Moments", image: "/hero/tradition.jpg", link: "#" },
+  { id: 8, title: "Graduations & Success", image: "/hero/graduation.jpg", link: "#" },
+  { id: 9, title: "Travel & Adventures", image: "/hero/travel.jpg", link: "#" },
 ];
 
 export default function Occasions({ onBookClick }: { onBookClick?: () => void }) {
+  const router = useRouter();
+  
   return (
     <section id="occasions" className="relative w-full bg-brand-background flex flex-col items-center justify-center overflow-hidden pt-4 pb-24">
       
@@ -46,7 +49,11 @@ export default function Occasions({ onBookClick }: { onBookClick?: () => void })
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             className={`relative group overflow-hidden rounded-2xl cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/5] ${index === 8 ? 'col-span-2 md:col-span-1 aspect-[2/1] md:aspect-[4/5]' : ''}`}
-            onClick={() => alert(`Opening details for ${category.title}...`)}
+            onClick={() => {
+              if (category.link !== "#") {
+                router.push(category.link);
+              }
+            }}
           >
             <Image
               src={category.image}

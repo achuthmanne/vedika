@@ -22,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${dmSerif.variable} ${manrope.variable} h-full antialiased`}
+      className={`${dmSerif.variable} ${manrope.variable} h-full antialiased scrollbar-hide`}
     >
-      <body className="min-h-full flex flex-col font-body">{children}</body>
+      <body className="min-h-full flex flex-col font-body scrollbar-hide">{children}</body>
     </html>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Footer({ onBookClick }: { onBookClick?: () => void }) {
@@ -25,13 +26,13 @@ export default function Footer({ onBookClick }: { onBookClick?: () => void }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative w-[180px] h-[60px] mb-8"
+          className="relative w-[280px] md:w-[350px] h-[100px] md:h-[120px] mb-8"
         >
           <Image 
-            src="/logo.png" 
+            src="/footer-logo-final.png" 
             alt="VEDIKA Logo" 
             fill
-            className="object-contain brightness-0 invert"
+            className="object-contain"
           />
         </motion.div>
 
@@ -61,9 +62,9 @@ export default function Footer({ onBookClick }: { onBookClick?: () => void }) {
         <div className="w-full flex flex-col md:flex-row justify-between items-center text-brand-background/40 font-body text-xs md:text-sm font-medium tracking-wide">
           <p>© {new Date().getFullYear()} Vedika. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-brand-accent transition-colors">Privacy</a>
-            <a href="#" className="hover:text-brand-accent transition-colors">Terms</a>
-            <a href="#" className="hover:text-brand-accent transition-colors">Contact</a>
+            <Link href="/privacy" className="hover:text-brand-accent transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-brand-accent transition-colors">Terms</Link>
+            <Link href="/contact" className="hover:text-brand-accent transition-colors">Contact</Link>
           </div>
         </div>
 

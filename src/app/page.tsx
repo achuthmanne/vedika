@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -13,6 +13,16 @@ import Footer from "@/components/Footer";
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"hero" | "explore">("hero");
   const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    // If the user navigates back from a subpage like /privacy, jump straight to explore
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("section") === "explore") {
+        setActiveSection("explore");
+      }
+    }
+  }, []);
 
   return (
     <main className="h-screen w-full bg-[var(--color-brand-background)] overflow-hidden relative">
@@ -32,8 +42,8 @@ export default function Home() {
               key="hero-left"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ x: "-100%", opacity: 0, filter: "blur(10px)" }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ x: "-100%", opacity: 0, filter: "blur(15px)" }}
+              transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
               className="absolute inset-0 z-20 pointer-events-none"
               style={{ clipPath: "inset(0 50% 0 0)" }}
             >
@@ -45,8 +55,8 @@ export default function Home() {
               key="hero-right"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ x: "100%", opacity: 0, filter: "blur(10px)" }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ x: "100%", opacity: 0, filter: "blur(15px)" }}
+              transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
               className="absolute inset-0 z-20 pointer-events-none"
               style={{ clipPath: "inset(0 0 0 50%)" }}
             >
@@ -75,9 +85,9 @@ export default function Home() {
         {activeSection === "explore" && (
           <motion.div
             key="explore"
-            initial={{ opacity: 0.5, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="absolute inset-0 z-10 overflow-y-auto scrollbar-hide"
             onScroll={(e) => setScrollY(e.currentTarget.scrollTop)}
           >

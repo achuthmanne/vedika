@@ -48,7 +48,13 @@ export default function HowItWorks() {
       <div className="relative z-10 flex flex-col md:flex-row items-start justify-center gap-12 lg:gap-24 w-full max-w-6xl px-4 mt-8">
         
         {/* Connecting Line (Desktop Only) */}
-        <div className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-[2px] bg-linear-to-r from-transparent via-[#9A7B4F]/60 to-transparent -z-10"></div>
+        <motion.div 
+          initial={{ scaleX: 0, opacity: 0 }}
+          whileInView={{ scaleX: 1, opacity: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1.2, delay: 0.2, ease: "easeInOut" }}
+          className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-[2px] bg-linear-to-r from-transparent via-[#9A7B4F]/60 to-transparent -z-10 origin-center"
+        ></motion.div>
         
         {steps.map((step, index) => (
           <motion.div
