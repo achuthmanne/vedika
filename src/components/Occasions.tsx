@@ -41,10 +41,11 @@ export default function Occasions({ onBookClick }: { onBookClick?: () => void })
         {categories.map((category, index) => (
           <motion.div
             key={category.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-            className="group relative aspect-square md:aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-300"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className={`relative group overflow-hidden rounded-2xl cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/5] ${index === 8 ? 'col-span-2 md:col-span-1 aspect-[2/1] md:aspect-[4/5]' : ''}`}
             onClick={() => alert(`Opening details for ${category.title}...`)}
           >
             <Image

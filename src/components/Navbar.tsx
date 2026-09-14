@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 }: { onExploreClick?: () => void, isCompact?: boolean, scrollY?: number }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const threshold = 300;
   const isScrolledPast = scrollY >= threshold;
@@ -91,23 +94,76 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
             )}
           </AnimatePresence>
 
-          {/* CTA Buttons (Desktop: Right, Mobile: Bottom Fixed) */}
+          {/* CTA Buttons (Desktop) & Hamburger (Mobile) */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="fixed bottom-6 left-4 right-4 md:static md:bottom-auto md:left-auto md:right-auto flex items-center justify-center md:justify-end gap-6 z-50"
+            className="flex items-center gap-4 z-50"
           >
+            {/* Desktop CTA */}
             <button
               onClick={() => alert("Book form opening...")}
-              className="bg-brand-primary text-brand-background hover:bg-[#9c4632] px-6 py-3.5 md:py-2.5 w-full md:w-auto text-center rounded-full text-base md:text-sm font-semibold transition-all duration-300 shadow-xl md:shadow-sm hover:shadow-md cursor-pointer"
+              className="hidden md:block bg-brand-primary text-brand-background hover:bg-[#9c4632] px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
             >
               Create Your Vedika
             </button>
+
+            {/* Mobile Hamburger (Only visible when links should be shown) */}
+            {showLinks && (
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-brand-text flex items-center justify-center cursor-pointer"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            )}
           </motion.div>
           
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {showLinks && mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden absolute top-full left-0 w-full bg-[#F8F3EA] border-t border-brand-accent/10 shadow-xl overflow-hidden"
+          >
+            <div className="flex flex-col p-4 gap-4">
+              {[
+                { name: "Concept", id: "concept" },
+                { name: "Occasions", id: "occasions" },
+                { name: "Experience", id: "experience" },
+                { name: "How It Works", id: "how-it-works" },
+              ].map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => {
+                    document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' });
+                    setMobileMenuOpen(false);
+                  }}
+                  className="text-left text-base font-bold tracking-widest uppercase transition-colors text-brand-text/90 hover:text-brand-primary py-2 px-4"
+                >
+                  {link.name}
+                </button>
+              ))}
+              
+              <button
+                onClick={() => {
+                  alert("Book form opening...");
+                  setMobileMenuOpen(false);
+                }}
+                className="mt-2 bg-brand-primary text-brand-background px-6 py-3.5 w-full text-center rounded-full text-base font-semibold transition-all duration-300 shadow-md cursor-pointer"
+              >
+                Create Your Vedika
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }
