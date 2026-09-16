@@ -94,7 +94,7 @@ export default function Home() {
             <WhatIsVedika />
             
             {/* Vedika Netflix-style Curved Divider */}
-            <div className="relative w-full my-4 h-[60px] md:h-[100px] flex justify-center">
+            <div className="relative w-full mt-24 mb-16 h-[60px] md:h-[100px] flex justify-center">
               <svg 
                 viewBox="0 0 1440 100" 
                 fill="none" 

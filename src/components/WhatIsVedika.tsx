@@ -26,7 +26,7 @@ const pillars = [
 
 export default function WhatIsVedika() {
   return (
-    <section id="concept" className="relative w-full bg-[var(--color-brand-background)] flex flex-col items-center justify-center overflow-hidden pt-24 md:pt-32 pb-4">
+    <section id="concept" className="relative w-full bg-[var(--color-brand-background)] flex flex-col items-center justify-center overflow-hidden pt-24 md:pt-32 pb-12">
       
       {/* Main Heading */}
       <motion.div

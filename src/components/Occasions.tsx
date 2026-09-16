@@ -7,18 +7,18 @@ import { ArrowRight } from "lucide-react";
 
 const categories = [
   { id: 1, title: "Weddings & Love", image: "/hero/wedding.jpg", link: "/occasions/weddings" },
-  { id: 2, title: "Grand Openings", image: "/hero/housewarming.jpg", link: "/occasions/openings" },
+  { id: 2, title: "New Beginnings", image: "/hero/housewarming.jpg", link: "/occasions/openings" },
   { id: 3, title: "Family & Milestones", image: "/hero/baby.jpg", link: "/occasions/milestones" },
   { id: 4, title: "Festivals & Traditions", image: "/hero/festival.jpg", link: "/occasions/festivals" },
-  { id: 5, title: "Events & Gatherings", image: "/hero/friends.jpg", link: "#" },
-  { id: 6, title: "Travel & Adventures", image: "/hero/travel.jpg", link: "#" },
+  { id: 5, title: "Events & Organizations", image: "/hero/friends.jpg", link: "/occasions/events" },
+  { id: 6, title: "Travel & Adventures", image: "/hero/travel.jpg", link: "/occasions/travel" },
 ];
 
 export default function Occasions({ onBookClick }: { onBookClick?: () => void }) {
   const router = useRouter();
   
   return (
-    <section id="occasions" className="relative w-full bg-brand-background flex flex-col items-center justify-center overflow-hidden pt-4 pb-24">
+    <section id="occasions" className="relative w-full bg-brand-background flex flex-col items-center justify-center overflow-hidden pt-12 pb-24">
       
       {/* Header */}
       <motion.div
@@ -73,6 +73,26 @@ export default function Occasions({ onBookClick }: { onBookClick?: () => void })
           </motion.div>
         ))}
       </div>
+
+      {/* Custom CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mt-16 text-center px-4"
+      >
+        <p className="text-brand-text/70 text-lg mb-4 font-light">Can't find your occasion?</p>
+        <p className="font-heading text-2xl md:text-3xl text-brand-text mb-8">
+          Tell us what you're celebrating. <br className="hidden sm:block" /> We'll create its space.
+        </p>
+        <button 
+          onClick={onBookClick}
+          className="px-8 py-4 bg-brand-text text-brand-background rounded-full font-bold uppercase tracking-widest text-sm hover:bg-brand-primary transition-colors flex items-center gap-2 mx-auto"
+        >
+          Create Something Custom <ArrowRight className="w-4 h-4" />
+        </button>
+      </motion.div>
 
     </section>
   );
