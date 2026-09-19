@@ -82,49 +82,33 @@ export default function RoyalGaneshTemplate() {
   }, []);
 
   const fetchBlessings = async () => {
-    const { data, error } = await supabase
-      .from("blessings")
-      .select("*")
-      .eq("template_id", "ganesh-royal")
-      .order("created_at", { ascending: false });
-      
-    if (data) {
-      // Format dates nicely
-      const formattedData = data.map(b => ({
-        ...b,
-        date: new Date(b.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })
-      }));
-      setBlessings(formattedData);
-    }
+    // Avoid DB calls during builder/preview phase
+    setBlessings([
+      { id: 1, name: "Kiran & Family", city: "Hyderabad", message: "Om Gam Ganapataye Namaha! May Bappa remove all obstacles and bless everyone with peace and prosperity. Beautiful pandal decoration this year!", date: "Sept 1" },
+      { id: 2, name: "Rahul S.", city: "Pune", message: "Missing the hometown celebrations, but feeling blessed to see this digital darshan. Ganpati Bappa Morya!", date: "Sept 2" }
+    ]);
   };
 
   const handlePostBlessing = async () => {
     if (!newMessage.trim() || !newName.trim()) return;
     setIsPosting(true);
     
-    const { data, error } = await supabase
-      .from("blessings")
-      .insert([
-        {
-          name: newName,
-          city: newCity || "India",
-          message: newMessage,
-          template_id: "ganesh-royal"
-        }
-      ])
-      .select();
-
-    if (data) {
+    // Local mock insert
+    setTimeout(() => {
       const newBlessing = {
-        ...data[0],
+        id: Date.now(),
+        name: newName,
+        city: newCity || "India",
+        message: newMessage,
         date: "Just now"
       };
-      setBlessings([newBlessing, ...blessings]);
+      
+      setBlessings(prev => [newBlessing, ...prev]);
       setNewMessage("");
       setNewName("");
       setNewCity("");
-    }
-    setIsPosting(false);
+      setIsPosting(false);
+    }, 600);
   };
   
   const { scrollYProgress } = useScroll();

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Settings, Image as ImageIcon, CalendarClock, Users, CreditCard, ChevronRight, Check, ArrowLeft, Smartphone, Monitor, Plus, Trash2, MapPin } from "lucide-react";
+import { Settings, Image as ImageIcon, CalendarClock, Users, CreditCard, ChevronRight, Check, ArrowLeft, Smartphone, Monitor, Plus, Trash2, MapPin, Sparkles, X, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 const STEPS = [
@@ -17,6 +17,8 @@ const STEPS = [
 export default function RoyalBuilder() {
   const [activeStep, setActiveStep] = useState("basics");
   const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("mobile");
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -602,9 +604,27 @@ export default function RoyalBuilder() {
           <button className="px-6 py-3 text-xs font-bold uppercase tracking-widest text-brand-text/60 hover:text-brand-primary">
             Preview
           </button>
-          <button className="px-8 py-3 bg-brand-text text-brand-background rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-md flex items-center gap-2">
-            Next Step <ChevronRight className="w-4 h-4" />
-          </button>
+          
+          {activeStep === "payment" ? (
+            <button 
+              onClick={() => setIsCheckoutOpen(true)}
+              className="px-8 py-3 bg-[#C9963E] text-[#123B2A] rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#B58532] transition-colors shadow-md flex items-center gap-2"
+            >
+              Publish Site - ₹1,499
+            </button>
+          ) : (
+            <button 
+              onClick={() => {
+                const currentIndex = STEPS.findIndex(s => s.id === activeStep);
+                if (currentIndex < STEPS.length - 1) {
+                  setActiveStep(STEPS[currentIndex + 1].id);
+                }
+              }}
+              className="px-8 py-3 bg-brand-text text-brand-background rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-md flex items-center gap-2"
+            >
+              Next Step <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -682,6 +702,114 @@ export default function RoyalBuilder() {
             </motion.div>
         </div>
       </div>
+
+      {/* RAZORPAY STYLE CHECKOUT MODAL */}
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => !isProcessing && setIsCheckoutOpen(false)}
+            />
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-[400px] bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col"
+            >
+              {/* Header */}
+              <div className="bg-[#123B2A] px-6 py-5 text-white flex justify-between items-start relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-[#C9963E]" />
+                    </div>
+                    <span className="font-bold tracking-widest uppercase text-xs">Vedika Platform</span>
+                  </div>
+                  <h3 className="text-xl font-serif text-[#FFF8E8]">{templateData.mainName} Pandal</h3>
+                  <p className="text-white/60 text-xs">Ganesh Royal Premium Theme</p>
+                </div>
+                <button 
+                  onClick={() => !isProcessing && setIsCheckoutOpen(false)}
+                  className="text-white/50 hover:text-white transition-colors relative z-10"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                
+                {/* Decorative BG */}
+                <div className="absolute right-0 top-0 w-32 h-32 bg-[#C9963E]/20 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+              </div>
+              
+              {/* Content */}
+              <div className="p-6 bg-[#F9FAFB] flex-1 border-b border-gray-100">
+                <div className="flex justify-between items-center mb-6">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-widest">Amount Payable</span>
+                  <span className="text-2xl font-bold text-gray-900">₹1,499</span>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Phone Number</label>
+                    <input 
+                      type="tel" 
+                      placeholder="+91 98765 43210" 
+                      className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Email (Optional)</label>
+                    <input 
+                      type="email" 
+                      placeholder="devotee@example.com" 
+                      className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+                    />
+                  </div>
+                </div>
+                
+                <div className="mt-6 bg-blue-50/50 border border-blue-100 rounded-lg p-4 flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                  <p className="text-xs text-blue-900/70 leading-relaxed">
+                    <strong>Lifetime Access:</strong> Publishing will generate a permanent live link and QR code. You can edit images and schedules anytime for free.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Footer / Pay Button */}
+              <div className="p-6 bg-white">
+                <button 
+                  onClick={() => {
+                    setIsProcessing(true);
+                    setTimeout(() => {
+                      setIsProcessing(false);
+                      setIsCheckoutOpen(false);
+                      alert("Payment Successful! Your Vedika is now live. 🎉");
+                    }, 2500);
+                  }}
+                  disabled={isProcessing}
+                  className="w-full py-4 bg-[#123B2A] text-[#C9963E] rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-[#0a2419] transition-all flex items-center justify-center shadow-xl shadow-[#123B2A]/20 disabled:opacity-70"
+                >
+                  {isProcessing ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-[#C9963E]/30 border-t-[#C9963E] rounded-full animate-spin"></div>
+                      Processing...
+                    </div>
+                  ) : (
+                    "Pay ₹1,499 & Publish"
+                  )}
+                </button>
+                <div className="mt-4 flex items-center justify-center gap-1.5 opacity-50">
+                  <Sparkles className="w-3 h-3" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Secured by Razorpay</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
