@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Settings, Image as ImageIcon, CalendarClock, Users, CreditCard, ChevronRight, Check, ArrowLeft, Smartphone, Monitor, Plus, Trash2, MapPin, Sparkles, X, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import VedikaCheckout from "@/components/VedikaCheckout";
 
 const STEPS = [
   { id: "basics", label: "Basic Details", icon: Settings },
@@ -750,108 +751,18 @@ export default function RoyalBuilder() {
         )}
       </AnimatePresence>
 
-      {/* VEDIKA OFFICIAL PAYMENT MODAL (MANUAL QR) */}
-      <AnimatePresence>
-        {isCheckoutOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-brand-text/80 backdrop-blur-sm"
-              onClick={() => !isProcessing && setIsCheckoutOpen(false)}
-            />
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-[420px] bg-brand-background rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-brand-text/10"
-            >
-              {/* Header */}
-              <div className="bg-brand-text px-8 py-6 text-brand-background text-center relative overflow-hidden">
-                <div className="relative z-10">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-background/10 mb-4 border border-brand-background/20">
-                    <Sparkles className="w-5 h-5 text-brand-accent" />
-                  </div>
-                  <h3 className="font-heading text-2xl mb-1">Vedika Official</h3>
-                  <p className="text-brand-background/60 text-xs font-bold uppercase tracking-widest mb-6">Secure Payment Portal</p>
-                  
-                  <div className="bg-brand-background/10 py-3 px-6 rounded-xl border border-brand-background/10 inline-block">
-                    <p className="text-xs text-brand-background/70 mb-1">Total Amount Payable</p>
-                    <p className="font-heading text-3xl text-brand-accent">₹1,499</p>
-                  </div>
-                </div>
-                
-                {/* Decorative BG */}
-                <div className="absolute -right-10 -top-10 w-40 h-40 bg-brand-primary/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-brand-accent/20 rounded-full blur-3xl pointer-events-none"></div>
-              </div>
-              
-              {/* Content */}
-              <div className="p-8 flex-1">
-                <div className="bg-white p-4 rounded-2xl shadow-sm border border-brand-text/10 flex flex-col items-center mb-6">
-                  <div className="w-48 h-48 relative rounded-xl overflow-hidden mb-3 border border-gray-100">
-                    <Image src="/vedika-qr.jpg" alt="Vedika QR Code" fill className="object-contain" />
-                  </div>
-                  <p className="text-xs font-bold text-brand-text/60 uppercase tracking-widest text-center">Scan to pay with any UPI App</p>
-                  <div className="flex gap-2 mt-3 items-center justify-center opacity-60">
-                    <span className="text-[10px] font-bold">GPay</span> &bull; <span className="text-[10px] font-bold">PhonePe</span> &bull; <span className="text-[10px] font-bold">Paytm</span>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-brand-text/60 uppercase tracking-widest mb-1.5">Phone Number</label>
-                    <input 
-                      type="tel" 
-                      placeholder="+91 98765 43210" 
-                      className="w-full bg-white border border-brand-text/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all shadow-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-brand-text/60 uppercase tracking-widest mb-1.5">12-Digit UTR Number <span className="text-brand-primary">*</span></label>
-                    <input 
-                      type="text" 
-                      placeholder="e.g. 321456789012" 
-                      className="w-full bg-white border border-brand-text/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all shadow-sm font-mono"
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              {/* Footer / Pay Button */}
-              <div className="p-6 pt-0">
-                <button 
-                  onClick={() => {
-                    setIsProcessing(true);
-                    setTimeout(() => {
-                      setIsProcessing(false);
-                      setIsCheckoutOpen(false);
-                      alert("Payment Details Received! \n\nYour UTR is being verified by the Vedika Team. Your site will be fully active in 10-15 minutes.");
-                    }, 2500);
-                  }}
-                  disabled={isProcessing}
-                  className="w-full py-4 bg-brand-primary text-white rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-[#9d4631] transition-all flex items-center justify-center shadow-xl shadow-brand-primary/20 disabled:opacity-70"
-                >
-                  {isProcessing ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      Verifying...
-                    </div>
-                  ) : (
-                    "Submit Payment"
-                  )}
-                </button>
-                <div className="mt-4 flex items-center justify-center gap-1.5 opacity-50">
-                  <CheckCircle2 className="w-3 h-3 text-brand-text" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-brand-text">100% Secure & Encrypted</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <VedikaCheckout 
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        amount={1499}
+        qrImage="/vedika-qr.jpg"
+        upiId="8121648629@ptyes"
+        planName="Ganesh Royal Premium Theme"
+        onSuccess={(utr, phone) => {
+          setIsCheckoutOpen(false);
+          alert(`Payment Details Received!\n\nPhone: ${phone}\nUTR: ${utr}\n\nYour site will be fully active in 10-15 minutes.`);
+        }}
+      />
 
     </div>
   );
