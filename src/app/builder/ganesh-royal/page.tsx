@@ -629,7 +629,7 @@ export default function RoyalBuilder() {
                   setActiveStep(STEPS[currentIndex + 1].id);
                 }
               }}
-              className="px-8 py-3 bg-brand-text text-brand-background rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-md flex items-center gap-2"
+              className="ml-auto px-8 py-3 bg-brand-text text-brand-background rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-md flex items-center gap-2"
             >
               Next Step <ChevronRight className="w-4 h-4" />
             </button>
