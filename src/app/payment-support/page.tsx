@@ -5,15 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail, MessageCircle, AlertCircle } from "lucide-react";
 
-export default function ContactPage() {
+export default function PaymentSupportPage() {
   const router = useRouter();
   const [backText, setBackText] = useState("Back to Home");
   const [isFromCheckout, setIsFromCheckout] = useState(false);
 
   useEffect(() => {
-    if (document.referrer.includes("/checkout")) {
+    if (window.location.search.includes("from=checkout") || document.referrer.includes("/checkout")) {
       setBackText("Back to Payment");
       setIsFromCheckout(true);
     }
@@ -52,16 +52,26 @@ export default function ContactPage() {
           transition={{ duration: 0.8 }}
           className="font-heading text-4xl md:text-6xl text-brand-text mb-6"
         >
-          Let's Craft Something <span className="text-brand-primary italic">Beautiful.</span>
+          Payment & <span className="text-brand-primary italic">Support.</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-lg md:text-xl text-brand-text/80 max-w-xl mx-auto font-light leading-relaxed"
+          className="text-lg md:text-xl text-brand-text/80 max-w-2xl mx-auto font-light leading-relaxed mb-10"
         >
-          Whether it's an upcoming event or a cherished past celebration, reach out to our team directly. We are ready to design your perfect digital space.
+          Need help verifying a transaction? Having trouble with PhonePe, GPay, or Paytm? Reach out to our team instantly via WhatsApp. We are here to help.
         </motion.p>
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-4 flex items-center justify-center gap-3 text-sm text-brand-text/80 max-w-md mx-auto"
+        >
+          <AlertCircle className="w-5 h-5 text-brand-primary shrink-0" />
+          <p>Please keep your <strong>12-digit UTR Number</strong> ready before contacting support.</p>
+        </motion.div>
       </section>
 
       {/* Contact Cards */}
@@ -70,63 +80,38 @@ export default function ContactPage() {
           
           {/* WhatsApp Card */}
           <motion.a 
-            href="https://wa.me/918121648629?text=Hi%20Vedika%20Team!%20I%20would%20like%20to%20craft%20a%20digital%20space%20for%20my%20celebration."
+            href="https://wa.me/918121648629?text=Hi%20Vedika%20Team!%20I%20need%20help%20with%20my%20payment%20verification."
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 md:p-8 bg-brand-primary/5 hover:bg-brand-primary/10 border border-brand-primary/10 rounded-3xl transition-all duration-300 backdrop-blur-md cursor-pointer"
+            className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 md:p-8 bg-brand-primary/10 hover:bg-brand-primary/20 border border-brand-primary/20 rounded-3xl transition-all duration-300 backdrop-blur-md cursor-pointer"
           >
             <div className="flex items-center gap-6 mb-4 md:mb-0">
-              <div className="p-4 bg-brand-primary/10 rounded-2xl text-brand-primary group-hover:scale-110 transition-transform duration-300">
+              <div className="p-4 bg-white/50 rounded-2xl text-brand-primary group-hover:scale-110 transition-transform duration-300 shadow-sm">
                 <MessageCircle className="w-8 h-8" />
               </div>
               <div>
-                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-brand-primary/70 mb-1">Direct Booking</p>
+                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-brand-primary/70 mb-1">Instant Payment Support</p>
                 <h3 className="font-heading text-2xl md:text-3xl text-brand-text">Chat on WhatsApp</h3>
               </div>
             </div>
-            <div className="w-10 h-10 rounded-full border border-brand-text/10 flex items-center justify-center group-hover:border-brand-primary group-hover:text-brand-primary transition-colors self-end md:self-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-          </motion.a>
-
-          {/* Instagram Card */}
-          <motion.a 
-            href="https://instagram.com/vedika.celebrations"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 md:p-8 bg-brand-accent/5 hover:bg-brand-accent/10 border border-brand-accent/10 rounded-3xl transition-all duration-300 backdrop-blur-md cursor-pointer"
-          >
-            <div className="flex items-center gap-6 mb-4 md:mb-0">
-              <div className="p-4 bg-brand-accent/10 rounded-2xl text-brand-accent group-hover:scale-110 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-              </div>
-              <div>
-                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-brand-accent/70 mb-1">Social</p>
-                <h3 className="font-heading text-2xl md:text-3xl text-brand-text">@vedika.celebrations</h3>
-              </div>
-            </div>
-            <div className="w-10 h-10 rounded-full border border-brand-text/10 flex items-center justify-center group-hover:border-brand-accent group-hover:text-brand-accent transition-colors self-end md:self-center">
+            <div className="w-10 h-10 rounded-full border border-brand-primary/30 flex items-center justify-center group-hover:border-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-colors self-end md:self-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </motion.a>
 
           {/* Email Card */}
           <motion.a 
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=vedika.celebration@gmail.com&su=Inquiry%20for%20Vedika%20Celebration&body=Hi%20Vedika%20Team%2C%0A%0AI%20would%20like%20to%20craft%20a%20digital%20space%20for%20my%20celebration.%0A%0AMy%20Name%3A%20%0AEvent%20Date%3A%20%0AType%20of%20Event%3A%20%0A%0APlease%20let%20me%20know%20the%20next%20steps.%0A%0AThanks!"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=vedika.support@gmail.com&su=Payment%20Support%20Request&body=Hi%20Vedika%20Team%2C%0A%0AI%20need%20help%20with%20my%20payment%20verification.%0A%0AMy%20WhatsApp%20Number%3A%20%0A12-Digit%20UTR%3A%20%0A%0APlease%20let%20me%20know%20when%20it%20will%20be%20approved.%0A%0AThanks!"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 md:p-8 bg-brand-text/5 hover:bg-brand-text/10 border border-brand-text/10 rounded-3xl transition-all duration-300 backdrop-blur-md cursor-pointer"
           >
             <div className="flex items-center gap-6 mb-4 md:mb-0">
@@ -134,8 +119,8 @@ export default function ContactPage() {
                 <Mail className="w-8 h-8" />
               </div>
               <div>
-                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-brand-text/50 mb-1">Email</p>
-                <h3 className="font-heading text-xl md:text-2xl text-brand-text break-all">vedika.celebration@gmail.com</h3>
+                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-brand-text/50 mb-1">Email Support</p>
+                <h3 className="font-heading text-xl md:text-2xl text-brand-text break-all">vedika.support@gmail.com</h3>
               </div>
             </div>
             <div className="w-10 h-10 rounded-full border border-brand-text/10 flex items-center justify-center group-hover:border-brand-text group-hover:text-brand-text transition-colors self-end md:self-center">

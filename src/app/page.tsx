@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import WhatIsVedika from "@/components/WhatIsVedika";
@@ -93,6 +94,38 @@ export default function Home() {
           >
             <WhatIsVedika />
             
+            {/* Explore Templates Banner */}
+            <div className="w-full flex justify-center px-4 mt-8">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="max-w-6xl w-full bg-brand-text/5 border border-brand-text/10 rounded-[2rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left overflow-hidden relative"
+              >
+                {/* Decorative background blur */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none" />
+
+                <div className="z-10 max-w-xl">
+                  <h3 className="font-heading text-3xl md:text-5xl text-brand-text mb-4">
+                    Discover our <span className="text-brand-primary italic">Templates.</span>
+                  </h3>
+                  <p className="font-body text-brand-text/70 text-base md:text-lg mb-0 leading-relaxed">
+                    Browse our handcrafted, editorial designs created for Weddings, Birthdays, Anniversaries, and everything in between.
+                  </p>
+                </div>
+                
+                <div className="z-10 shrink-0">
+                  <Link 
+                    href="/templates"
+                    className="inline-flex items-center justify-center px-8 py-5 bg-brand-text text-brand-background rounded-full font-body font-bold text-xs md:text-sm uppercase tracking-[0.15em] hover:bg-brand-primary transition-all hover:scale-105 shadow-xl hover:shadow-brand-primary/20"
+                  >
+                    Explore Templates
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
             {/* Vedika Netflix-style Curved Divider */}
             <div className="relative w-full mt-24 mb-16 h-[60px] md:h-[100px] flex justify-center">
               <svg 

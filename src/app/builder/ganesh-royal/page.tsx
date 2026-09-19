@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Settings, Image as ImageIcon, CalendarClock, Users, CreditCard, ChevronRight, Check, ArrowLeft, Smartphone, Monitor, Plus, Trash2, MapPin, Sparkles, X, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import VedikaCheckout from "@/components/VedikaCheckout";
 
 const STEPS = [
   { id: "basics", label: "Basic Details", icon: Settings },
@@ -617,7 +616,9 @@ export default function RoyalBuilder() {
           
           {activeStep === "payment" ? (
             <button 
-              onClick={() => setIsCheckoutOpen(true)}
+              onClick={() => {
+                window.location.href = "/checkout?amount=1499&plan=Ganesh+Royal+Premium+Theme";
+              }}
               className="ml-auto px-8 py-3 bg-brand-primary text-white rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg shadow-brand-primary/20"
             >
               Publish Your Vedika
@@ -750,19 +751,6 @@ export default function RoyalBuilder() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <VedikaCheckout 
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        amount={1499}
-        qrImage="/vedika-qr.jpg"
-        upiId="8121648629@ptyes"
-        planName="Ganesh Royal Premium Theme"
-        onSuccess={(utr, phone) => {
-          setIsCheckoutOpen(false);
-          alert(`Payment Details Received!\n\nPhone: ${phone}\nUTR: ${utr}\n\nYour site will be fully active in 10-15 minutes.`);
-        }}
-      />
 
     </div>
   );

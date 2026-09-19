@@ -5,15 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, Clock, Handshake } from "lucide-react";
+import { ShieldAlert, RefreshCcw, HandCoins } from "lucide-react";
 
-export default function TermsPage() {
+export default function RefundPolicyPage() {
   const router = useRouter();
   const [backText, setBackText] = useState("Back to Home");
   const [isFromCheckout, setIsFromCheckout] = useState(false);
 
   useEffect(() => {
-    if (document.referrer.includes("/checkout")) {
+    if (window.location.search.includes("from=checkout") || document.referrer.includes("/checkout")) {
       setBackText("Back to Payment");
       setIsFromCheckout(true);
     }
@@ -52,7 +52,7 @@ export default function TermsPage() {
           transition={{ duration: 0.8 }}
           className="font-heading text-4xl md:text-6xl text-brand-text mb-6"
         >
-          Clear Terms. <span className="text-brand-primary italic">No Surprises.</span>
+          Payments & <span className="text-brand-primary italic">Refunds.</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -60,7 +60,7 @@ export default function TermsPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-lg md:text-xl text-brand-text/80 max-w-2xl mx-auto font-light leading-relaxed"
         >
-          We believe in simple, transparent agreements. Our terms are designed to ensure your experience with Vedika is smooth, professional, and entirely stress-free.
+          To ensure absolute security and premium quality, every transaction undergoes a strict manual review process. Please read our guidelines carefully.
         </motion.p>
       </section>
 
@@ -77,12 +77,12 @@ export default function TermsPage() {
             className="flex flex-col md:flex-row gap-6 md:gap-10 items-start"
           >
             <div className="p-4 bg-brand-primary/10 backdrop-blur-md rounded-2xl text-brand-primary">
-              <FileText className="w-8 h-8" />
+              <ShieldAlert className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">The Service.</h3>
+              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">Manual Verification.</h3>
               <p className="text-brand-text/70 leading-relaxed text-base md:text-lg">
-                Vedika is a bespoke white-glove service. You provide the details and media of your celebration, and our team crafts a personalized digital gallery. We do not provide DIY website builders; we hand-code and design your space with care.
+                Every transaction on Vedika is <strong className="text-brand-text font-semibold">manually reviewed</strong> by our team for absolute security. Once you submit your 12-digit UTR, it goes into review. Your digital space will be approved and published live within <strong className="text-brand-primary font-semibold">2 to 24 hours</strong>. If the details provided are invalid, the booking will be disapproved.
               </p>
             </div>
           </motion.div>
@@ -96,12 +96,12 @@ export default function TermsPage() {
             className="flex flex-col md:flex-row gap-6 md:gap-10 items-start"
           >
             <div className="p-4 bg-brand-accent/10 backdrop-blur-md rounded-2xl text-brand-accent">
-              <ImageIcon className="w-8 h-8" />
+              <HandCoins className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">Media Ownership.</h3>
+              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">Non-Refundable Policy.</h3>
               <p className="text-brand-text/70 leading-relaxed text-base md:text-lg">
-                You retain full rights and ownership of every photo and video you share with us. We claim zero rights to your memories. They are hosted purely to populate your personal gallery, exactly as you intend.
+                Because Vedika provides personalized, bespoke digital galleries requiring manual design labor and immediate server allocation, <strong className="text-brand-text font-semibold">all successful bookings are strictly non-refundable</strong> once the payment is verified and the digital space goes live.
               </p>
             </div>
           </motion.div>
@@ -115,31 +115,12 @@ export default function TermsPage() {
             className="flex flex-col md:flex-row gap-6 md:gap-10 items-start"
           >
             <div className="p-4 bg-brand-primary/10 backdrop-blur-md rounded-2xl text-brand-primary">
-              <Handshake className="w-8 h-8" />
+              <RefreshCcw className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">Revisions & Delivery.</h3>
+              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">Disapproved Bookings.</h3>
               <p className="text-brand-text/70 leading-relaxed text-base md:text-lg">
-                Once the initial design is delivered, you will have a review period to request adjustments. We want your space to be perfect. After final approval, the space goes live and any major structural changes may require an additional consultation.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Point 4 */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row gap-6 md:gap-10 items-start"
-          >
-            <div className="p-4 bg-brand-accent/10 backdrop-blur-md rounded-2xl text-brand-accent">
-              <Clock className="w-8 h-8" />
-            </div>
-            <div>
-              <h3 className="font-heading text-2xl md:text-3xl mb-3 text-brand-text">Uptime & Hosting.</h3>
-              <p className="text-brand-text/70 leading-relaxed text-base md:text-lg">
-                Your Vedika will remain online and accessible via your private link for the duration of your chosen plan. We ensure high-speed delivery and premium hosting so your guests never face downtime during your celebration.
+                If your booking is disapproved, it means the UTR details submitted were invalid, incomplete, or from an unsupported UPI app. If money was deducted from your bank account but the booking was rejected, please reach out to our WhatsApp support team immediately with your exact 12-digit UTR and payment screenshot for manual resolution.
               </p>
             </div>
           </motion.div>
@@ -152,11 +133,17 @@ export default function TermsPage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="mt-20 pt-10 border-t border-brand-text/10 text-center"
+          className="mt-20 pt-10 border-t border-brand-text/10 text-center flex flex-col items-center"
         >
-          <p className="text-brand-text/50 text-sm font-medium">
-            By proceeding with your booking, you agree to these simple terms. <br/> Let's create something beautiful together.
+          <p className="text-brand-text/50 text-sm font-medium mb-4">
+            If you face any payment issues, do not hesitate to contact our team.
           </p>
+          <Link 
+            href="/payment-support?from=checkout"
+            className="inline-flex py-3 px-8 bg-brand-primary/10 text-brand-primary rounded-full font-body font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-primary hover:text-white transition-all duration-300"
+          >
+            Contact Support
+          </Link>
         </motion.div>
       </section>
 
