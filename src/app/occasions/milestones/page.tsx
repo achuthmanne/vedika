@@ -101,7 +101,7 @@ export default function MilestonesPage() {
                   <div className="transform translate-y-14 group-hover:translate-y-0 transition-transform duration-500 ease-out">
                     <p className="text-brand-background/80 text-sm font-medium mb-1">{sub.desc}</p>
                     <h3 className="font-heading text-2xl text-brand-background mb-4 drop-shadow-sm">{sub.title}</h3>
-                    <button className="w-fit px-6 py-3 rounded-full bg-brand-background/20 backdrop-blur-md border border-brand-background/30 text-brand-background text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-background hover:text-brand-text transition-all duration-500 opacity-0 group-hover:opacity-100">
+                    <button className="w-fit px-6 py-3 rounded-full bg-brand-background/20 backdrop-blur-md border border-brand-background/30 text-brand-background text-xs font-bold uppercase tracking-widest hover:bg-brand-background hover:text-brand-text transition-all duration-500 opacity-0 group-hover:opacity-100">
                       View Templates
                     </button>
                   </div>

@@ -5,15 +5,38 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Car, Heart, MapPin, Laptop, Sparkles, Check, Compass, Globe } from "lucide-react";
 
+const travelTemplates = [
+  {
+    title: "Friends Getaways",
+    desc: "Road trips & squad adventures",
+    img: "/travel-friends.jpg"
+  },
+  {
+    title: "Couples & Honeymoon",
+    desc: "Romantic escapes",
+    img: "/travel-honeymoon.jpg"
+  },
+  {
+    title: "Spiritual Yatras",
+    desc: "Pilgrimages & sacred journeys",
+    img: "/travel-yatra.jpg"
+  },
+  {
+    title: "Solo Expeditions",
+    desc: "Finding yourself on the road",
+    img: "/travel-digital.jpg"
+  }
+];
+
 export default function TravelPage() {
   const handleBooking = (packageId: string) => {
     let text = "";
-    if (packageId === "weekend") {
-      text = "Hi Vedika Team! I want to create a digital space for 'The Weekend Getaway' (₹1,999). We have a trip coming up. Please share the details.";
-    } else if (packageId === "expedition") {
-      text = "Hi Vedika Team! I want to book 'The Grand Expedition' digital space package (₹4,999) for our international trip/honeymoon. Please share the details.";
-    } else if (packageId === "ultimate") {
-      text = "Hi Vedika Team! We want to discuss 'The Ultimate Travelogue' digital space (₹9,999) for our massive family trip/yatra! Let's get started.";
+    if (packageId === "journey") {
+      text = "Hi Vedika Team! I want to create a digital space with 'The Journey' (₹4,999) package for our travel memories. Please share the details.";
+    } else if (packageId === "explorer") {
+      text = "Hi Vedika Team! I want to book 'The Explorer' (₹9,999) digital space package for our upcoming detailed trip. Please share the details.";
+    } else if (packageId === "grand_journey") {
+      text = "Hi Vedika Team! We want to discuss 'The Grand Journey' (₹14,999) digital space for a complete digital travel story. Let's get started.";
     }
     window.open("https://wa.me/918121648629?text=" + encodeURIComponent(text), "_blank");
   };
@@ -67,6 +90,37 @@ export default function TravelPage() {
               Don't let your greatest journeys get lost in your camera roll. Turn your scattered photos into breathtaking digital travelogues.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Explore Templates Carousel */}
+      <section className="pt-48 pb-0 bg-brand-background overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+              <p className="text-brand-primary uppercase tracking-[0.2em] font-bold text-sm mb-2">Dive Deeper</p>
+              <h2 className="font-heading text-4xl md:text-5xl text-brand-text">Explore by Trip Type</h2>
+            </div>
+            <p className="text-brand-text/60 text-sm max-w-sm">From wild road trips with friends to soulful solo journeys, discover bespoke digital templates for every kind of travel.</p>
+          </div>
+          
+          <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            {travelTemplates.map((sub, i) => (
+              <div key={i} className="min-w-[280px] md:min-w-[320px] snap-start relative rounded-3xl overflow-hidden aspect-[4/5] group cursor-pointer border border-brand-text/5 shadow-sm hover:shadow-xl transition-all">
+                <Image src={sub.img} alt={sub.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 p-6 flex flex-col justify-end overflow-hidden">
+                  <div className="transform translate-y-14 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                    <p className="text-brand-background/80 text-sm font-medium mb-1">{sub.desc}</p>
+                    <h3 className="font-heading text-2xl text-brand-background mb-4 drop-shadow-sm">{sub.title}</h3>
+                    <button className="w-fit px-6 py-3 rounded-full bg-brand-background/20 backdrop-blur-md border border-brand-background/30 text-brand-background text-xs font-bold uppercase tracking-widest hover:bg-brand-background hover:text-brand-text transition-all duration-500 opacity-0 group-hover:opacity-100">
+                      View Templates
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -199,45 +253,49 @@ export default function TravelPage() {
 
       {/* Pricing Section */}
       <section className="py-24 bg-brand-text text-brand-background px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           
           <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl mb-4">Travelogue Packages</h2>
+            <h2 className="font-heading text-4xl md:text-5xl mb-4">Build Your Custom VEDIKA</h2>
             <p className="text-brand-background/70 text-lg max-w-2xl mx-auto">
-              You travel the world, we build the digital space. Beautifully curated memories.
+              Turn every journey into a digital story worth revisiting.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             
-            {/* Package 1 */}
+            {/* Package 1: The Journey */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative overflow-hidden"
+              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative"
             >
-              <h3 className="font-heading text-2xl mb-2">The Weekend Getaway</h3>
-              <p className="text-brand-background/60 text-sm mb-6 h-10">Perfect for short road trips or weekend staycations.</p>
+              <h3 className="font-heading text-2xl mb-2">The Journey</h3>
+              <p className="text-brand-background/60 text-sm mb-6 h-10">For personal trips and intimate adventures</p>
               <div className="mb-8">
-                <span className="text-4xl font-heading">₹1,999</span>
+                <span className="text-4xl font-heading">₹4,999</span>
               </div>
               <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Ready-made Premium Design</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Simple Trip Story</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 100 Photos Gallery</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 1 Year Premium Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom VEDIKA design</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 5 travel days / sections</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 300 photos</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 2 highlight videos</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Travel itinerary</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Interactive map</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Personalized VEDIKA link</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 1 Year Hosting</li>
               </ul>
               <button 
-                onClick={() => handleBooking("weekend")}
+                onClick={() => handleBooking("journey")}
                 className="w-full py-4 rounded-full border border-brand-background/20 text-brand-background hover:bg-brand-background hover:text-brand-text transition-colors font-bold text-sm tracking-widest uppercase"
               >
-                Book Getaway
+                Choose Journey
               </button>
             </motion.div>
 
-            {/* Package 2 (Middle position for Best Seller) */}
+            {/* Package 2: The Explorer */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -246,59 +304,81 @@ export default function TravelPage() {
               className="p-8 rounded-3xl border-2 border-brand-accent bg-brand-background/10 relative"
             >
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-accent text-brand-text px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-                <Sparkles className="w-3 h-3" /> Most Popular
+                Best Seller
               </div>
-              <h3 className="font-heading text-2xl mb-2 text-brand-accent">The Grand Expedition</h3>
-              <p className="text-brand-background/60 text-sm mb-6 h-10">Ideal for Honeymoons, international trips, or week-long vacations.</p>
+              <h3 className="font-heading text-2xl mb-2 text-brand-accent">The Explorer</h3>
+              <p className="text-brand-background/60 text-sm mb-6 h-10">For detailed trips filled with places, people & memories</p>
               <div className="mb-8">
-                <span className="text-4xl font-heading text-brand-accent">₹4,999</span>
+                <span className="text-4xl font-heading text-brand-accent">₹9,999</span>
               </div>
               <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Interactive Travel Map</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Day-by-Day Itinerary View</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 300 Photos & Videos</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Digital Guestbook</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 3 Years Premium Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Everything in Journey</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 10 travel days / sections</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 1,000 photos</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 5 videos</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Day-by-day travel journal</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Interactive route map</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Places & experiences</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Travel companions section</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Photo & video galleries</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 2 Years Hosting</li>
               </ul>
               <button 
-                onClick={() => handleBooking("expedition")}
+                onClick={() => handleBooking("explorer")}
                 className="w-full py-4 rounded-full bg-brand-accent text-brand-text hover:bg-brand-accent/90 transition-colors font-bold text-sm tracking-widest uppercase"
               >
-                Book Expedition
+                Choose Explorer
               </button>
             </motion.div>
 
-            {/* Package 3: Enterprise */}
+            {/* Package 3: The Grand Journey */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative overflow-hidden"
+              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative"
             >
-              <div className="absolute top-0 right-0 bg-brand-primary/20 text-brand-background px-3 py-1 rounded-bl-xl text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-                <Compass className="w-3 h-3" /> Epic Journey
-              </div>
-              <h3 className="font-heading text-2xl mb-2">The Ultimate Travelogue</h3>
-              <p className="text-brand-background/60 text-sm mb-6 h-10">For massive family trips, spiritual yatras, or extreme multi-country adventures.</p>
+              <h3 className="font-heading text-2xl mb-2">The Grand Journey</h3>
+              <p className="text-brand-background/60 text-sm mb-6 min-h-[40px]">For a complete digital travel story</p>
               <div className="mb-8">
-                <span className="text-4xl font-heading">₹9,999</span>
+                <span className="text-4xl font-heading">₹14,999</span>
               </div>
               <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 100% Custom Travel Hub</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Unlimited WhatsApp Dumps</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Massive Community Gallery</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 5 Years Premium Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Everything in Explorer</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Unlimited* photos & videos</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Extended travel journal</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Multiple destinations</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Advanced interactive maps</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Travel timeline</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Stories & memories</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Guest / companion contributions</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Advanced custom design</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 3 Years Hosting</li>
               </ul>
               <button 
-                onClick={() => handleBooking("ultimate")}
+                onClick={() => handleBooking("grand_journey")}
                 className="w-full py-4 rounded-full border border-brand-background/20 text-brand-background hover:bg-brand-background hover:text-brand-text transition-colors font-bold text-sm tracking-widest uppercase"
               >
-                Book Ultimate
+                Choose Grand Journey
               </button>
             </motion.div>
 
           </div>
+
+          {/* Disclaimer & Small Line Below Pricing */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-brand-background/40 text-xs italic mb-4">* Storage limits may apply.</p>
+            <p className="text-brand-background/70 text-sm md:text-base max-w-3xl mx-auto font-medium">
+              Your journey. Your memories. Your VEDIKA.
+            </p>
+          </motion.div>
 
         </div>
       </section>

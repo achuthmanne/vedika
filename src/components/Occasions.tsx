@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 const categories = [
   { id: 1, title: "Weddings & Love", image: "/hero/wedding.jpg", link: "/occasions/weddings" },
-  { id: 2, title: "New Beginnings", image: "/hero/housewarming.jpg", link: "/occasions/openings" },
+  { id: 2, title: "New Beginnings & Launches", image: "/hero/housewarming.jpg", link: "/occasions/openings" },
   { id: 3, title: "Family & Milestones", image: "/hero/baby.jpg", link: "/occasions/milestones" },
   { id: 4, title: "Festivals & Traditions", image: "/hero/festival.jpg", link: "/occasions/festivals" },
   { id: 5, title: "Events & Organizations", image: "/hero/friends.jpg", link: "/occasions/events" },

@@ -8,12 +8,12 @@ import { Mic, Briefcase, HeartHandshake, Smartphone, Sparkles, Check, Building2,
 export default function EventsPage() {
   const handleBooking = (packageId: string) => {
     let text = "";
-    if (packageId === "basic") {
-      text = "Hi Vedika Team! I want to create a digital space for 'The Community Hub' (₹14,999). We have a gathering coming up. Please share the details.";
-    } else if (packageId === "standard") {
-      text = "Hi Vedika Team! I want to book 'The Institution Grand' digital space package (₹114,999) for our upcoming college fest/corporate event. Please share the details.";
-    } else if (packageId === "enterprise") {
-      text = "Hi Vedika Team! We want to discuss 'The Global Summit' digital space for a massive organization event. We have custom requirements! Let's get started.";
+    if (packageId === "essential") {
+      text = "Hi Vedika Team! I want to create a digital space with 'The Essential' (₹14,999) package for our organization/event. Please share the details.";
+    } else if (packageId === "professional") {
+      text = "Hi Vedika Team! I want to book 'The Professional' (₹24,999) digital space package for our upcoming large event. Please share the details.";
+    } else if (packageId === "signature") {
+      text = "Hi Vedika Team! We want to discuss 'The Signature' (₹39,999+) bespoke digital space for our organization. We have custom requirements! Let's get started.";
     }
     window.open("https://wa.me/918121648629?text=" + encodeURIComponent(text), "_blank");
   };
@@ -199,45 +199,50 @@ export default function EventsPage() {
 
       {/* Pricing Section */}
       <section className="py-24 bg-brand-text text-brand-background px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           
           <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl mb-4">Organization & Event Packages</h2>
+            <h2 className="font-heading text-4xl md:text-5xl mb-4">Build Your Custom VEDIKA</h2>
             <p className="text-brand-background/70 text-lg max-w-2xl mx-auto">
-              You host the event, we build the digital space. Customized solutions for every scale.
+              Give your event, community, or organization a digital space built around its purpose.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             
-            {/* Package 1 */}
+            {/* Package 1: The Essential */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative overflow-hidden"
+              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors"
             >
-              <h3 className="font-heading text-2xl mb-2">The Community Hub</h3>
-              <p className="text-brand-background/60 text-sm mb-6 h-10">Perfect for small corporate offsites, team building retreats, or large personal parties.</p>
+              <h3 className="font-heading text-2xl mb-2">The Essential</h3>
+              <p className="text-brand-background/60 text-sm mb-6 h-10">For smaller events and organizations</p>
               <div className="mb-8">
                 <span className="text-4xl font-heading">₹14,999</span>
               </div>
               <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Ready-made Premium Design</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Event Schedule & Details</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 300 Photos Gallery</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 1 Year Premium Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom VEDIKA design</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 5 sections</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Event schedule</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Photo & video gallery</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> About the organization/event</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Announcements</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Contact & location</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Personalized VEDIKA link</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 1 Year Hosting</li>
               </ul>
               <button 
-                onClick={() => handleBooking("basic")}
+                onClick={() => handleBooking("essential")}
                 className="w-full py-4 rounded-full border border-brand-background/20 text-brand-background hover:bg-brand-background hover:text-brand-text transition-colors font-bold text-sm tracking-widest uppercase"
               >
-                Book The Hub
+                Choose Essential
               </button>
             </motion.div>
 
-            {/* Package 2 (Middle position for Best Seller) */}
+            {/* Package 2: The Professional */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -246,59 +251,82 @@ export default function EventsPage() {
               className="p-8 rounded-3xl border-2 border-brand-accent bg-brand-background/10 relative"
             >
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-accent text-brand-text px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-                Most Popular
+                Best Seller
               </div>
-              <h3 className="font-heading text-2xl mb-2 text-brand-accent">The Institution Grand</h3>
-              <p className="text-brand-background/60 text-sm mb-6 h-10">Ideal for massive College Fests, University Symposiums, or Alumni Association meets.</p>
+              <h3 className="font-heading text-2xl mb-2 text-brand-accent">The Professional</h3>
+              <p className="text-brand-background/60 text-sm mb-6 h-10">For larger events and active communities</p>
               <div className="mb-8">
-                <span className="text-4xl font-heading text-brand-accent">₹114,999</span>
+                <span className="text-4xl font-heading text-brand-accent">₹24,999</span>
               </div>
               <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom Event Branding</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Live Updates & Speakers List</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Unlimited Community Gallery</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Digital Guestbook for Wishes</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 3 Years Premium Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Everything in Essential</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Up to 10 sections</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Multiple events & schedules</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Large photo & video galleries</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Registration / RSVP</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Updates & announcements</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Team / committee section</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Guestbook & messages</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom branding</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/90"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 2 Years Hosting</li>
               </ul>
               <button 
-                onClick={() => handleBooking("standard")}
+                onClick={() => handleBooking("professional")}
                 className="w-full py-4 rounded-full bg-brand-accent text-brand-text hover:bg-brand-accent/90 transition-colors font-bold text-sm tracking-widest uppercase"
               >
-                Book The Grand
+                Choose Professional
               </button>
             </motion.div>
 
-            {/* Package 3: Enterprise */}
+            {/* Package 3: The Signature */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative overflow-hidden"
+              className="p-8 rounded-3xl border border-brand-background/20 bg-brand-text transition-colors relative"
             >
-              <div className="absolute top-0 right-0 bg-brand-primary/20 text-brand-background px-3 py-1 rounded-bl-xl text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-                Global Scale
-              </div>
-              <h3 className="font-heading text-2xl mb-2">The Global Summit</h3>
-              <p className="text-brand-background/60 text-sm mb-6 h-10">Fully handcrafted digital space for massive multi-day corporate summits and global expos.</p>
+              <h3 className="font-heading text-2xl mb-2">The Signature</h3>
+              <p className="text-brand-background/60 text-sm mb-6 min-h-[40px]">For large-scale events and organizations</p>
               <div className="mb-8">
-                <span className="text-4xl font-heading">Custom</span>
+                <span className="text-4xl font-heading">₹39,999+</span>
               </div>
               <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 100% Handcrafted Design</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom Domain Integration</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Enterprise-grade bandwidth</li>
-                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Lifetime or Custom Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Fully bespoke VEDIKA</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Unlimited sections</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Multiple programs & events</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Advanced galleries & videos</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Registration / RSVP</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Live updates</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Organization / committee profiles</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom interactions</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Custom branding & domain support</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> 3 Years Hosting</li>
+                <li className="flex items-start gap-3 text-sm text-brand-background/80"><Check className="w-5 h-5 text-brand-accent shrink-0" /> Priority support</li>
               </ul>
               <button 
-                onClick={() => handleBooking("enterprise")}
+                onClick={() => handleBooking("signature")}
                 className="w-full py-4 rounded-full border border-brand-background/20 text-brand-background hover:bg-brand-background hover:text-brand-text transition-colors font-bold text-sm tracking-widest uppercase"
               >
-                Contact Sales
+                Build With VEDIKA
               </button>
             </motion.div>
 
           </div>
+
+          {/* Disclaimer & Small Line Below Pricing */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-brand-background/40 text-xs italic mb-4">* Large-scale requirements, higher storage, traffic, or advanced integrations may require a custom quote.</p>
+            <p className="text-brand-background/70 text-sm md:text-base max-w-3xl mx-auto font-medium">
+              Built for colleges, companies, alumni groups, cultural organizations, event committees, communities, and more.
+            </p>
+          </motion.div>
 
         </div>
       </section>
