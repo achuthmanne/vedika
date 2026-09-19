@@ -170,7 +170,7 @@ export default function RoyalBuilder() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <h1 className="font-heading text-2xl text-brand-text">Customize Template</h1>
-          <p className="text-sm text-brand-text/60 mt-1">Royal Floral Minimal (₹1,499)</p>
+          <p className="text-sm text-brand-text/60 mt-1">Royal Floral Minimal</p>
         </div>
 
         {/* Stepper Navigation */}
