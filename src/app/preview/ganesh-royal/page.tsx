@@ -24,6 +24,9 @@ export default function RoyalGaneshTemplate() {
     logoImage: "",
     heroImage: "",
     qrCodeImage: "",
+    locationImage: "",
+    locationAddress: "12, Green Park Colony",
+    locationCity: "Vijayawada, Andhra Pradesh 520001",
     galleryImages: [] as string[],
     memories: [
       { id: 1, title: "Maha Aarti 2025", desc: "Evening Darshan", img: "/festival-preparation.jpg", videoUrl: "" },
@@ -34,8 +37,10 @@ export default function RoyalGaneshTemplate() {
       { id: 2, title: "Maha Aarti", date: "Sept 7, 2026", time: "07:00 PM" }
     ],
     committee: [
-      { id: 1, name: "P. Sharma", role: "President" },
-      { id: 2, name: "K. Reddy", role: "Secretary" }
+      { id: 1, name: "Rahul Sharma", role: "President", photo: "" },
+      { id: 2, name: "Priya Patel", role: "Secretary", photo: "" },
+      { id: 3, name: "Amit Kumar", role: "Treasurer", photo: "" },
+      { id: 4, name: "Neha Singh", role: "Event Head", photo: "" }
     ]
   });
 
