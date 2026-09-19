@@ -617,9 +617,9 @@ export default function RoyalBuilder() {
           {activeStep === "payment" ? (
             <button 
               onClick={() => setIsCheckoutOpen(true)}
-              className="px-8 py-3 bg-[#C9963E] text-[#123B2A] rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#B58532] transition-colors shadow-md flex items-center gap-2"
+              className="ml-auto px-8 py-3 bg-brand-primary text-white rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg shadow-brand-primary/20"
             >
-              Publish Site - ₹1,499
+              Publish Your Vedika
             </button>
           ) : (
             <button 
