@@ -75,6 +75,7 @@ export default function RoyalGaneshTemplate() {
   const [newName, setNewName] = useState("");
   const [newCity, setNewCity] = useState("");
   const [showAllBlessings, setShowAllBlessings] = useState(false);
+  const [showAllGallery, setShowAllGallery] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
 
   useEffect(() => {
@@ -425,13 +426,16 @@ export default function RoyalGaneshTemplate() {
               <p className="text-[#B94A32] text-xs tracking-[0.3em] uppercase font-bold mb-4">Gallery</p>
               <h2 className="font-heading text-4xl md:text-5xl text-[#123B2A]">Digital Darshan</h2>
             </div>
-            <button className="hidden md:flex bg-transparent border-2 border-[#123B2A] text-[#123B2A] px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#123B2A] hover:text-[#FFF8E8] transition-colors">
-              View All Photos
+            <button 
+              onClick={() => setShowAllGallery(!showAllGallery)}
+              className={`${(templateData.galleryImages?.length > 4) ? 'hidden md:flex' : 'hidden'} bg-transparent border-2 border-[#123B2A] text-[#123B2A] px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#123B2A] hover:text-[#FFF8E8] transition-colors`}
+            >
+              {showAllGallery ? "View Less" : "View All Photos"}
             </button>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {(templateData.galleryImages?.length > 0 ? templateData.galleryImages : ["/ganesh-chaturthi.jpg", "/festival-puja.jpg", "/festival-preparation.jpg", "/festival-community.jpg"]).map((img, index) => {
+            {(templateData.galleryImages?.length > 0 ? templateData.galleryImages : ["/ganesh-chaturthi.jpg", "/festival-puja.jpg", "/festival-preparation.jpg", "/festival-community.jpg"]).slice(0, showAllGallery ? undefined : 4).map((img, index) => {
               const isFirst = index === 0;
               const isLastEven = index === 3;
               
@@ -448,9 +452,14 @@ export default function RoyalGaneshTemplate() {
           </div>
           
           {/* Mobile View All Button */}
-          <button className="w-full mt-8 md:hidden bg-transparent border-2 border-[#123B2A] text-[#123B2A] px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#123B2A] hover:text-[#FFF8E8] transition-colors">
-            View All Photos
-          </button>
+          {(templateData.galleryImages?.length > 4) && (
+            <button 
+              onClick={() => setShowAllGallery(!showAllGallery)}
+              className="w-full mt-8 md:hidden bg-transparent border-2 border-[#123B2A] text-[#123B2A] px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#123B2A] hover:text-[#FFF8E8] transition-colors"
+            >
+              {showAllGallery ? "View Less" : "View All Photos"}
+            </button>
+          )}
         </div>
       </section>
 
