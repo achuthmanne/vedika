@@ -17,6 +17,7 @@ const STEPS = [
 export default function RoyalBuilder() {
   const [activeStep, setActiveStep] = useState("basics");
   const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("mobile");
+  const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   
@@ -142,15 +143,20 @@ export default function RoyalBuilder() {
 
   // Sync with iframe
   useEffect(() => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      const payload = {
-        ...templateData,
-        schedule,
-        committee,
-        previewMode
-      };
-      iframeRef.current.contentWindow.postMessage({ type: 'UPDATE_PREVIEW', data: payload }, '*');
-    }
+    const payload = {
+      ...templateData,
+      schedule,
+      committee,
+      previewMode
+    };
+    
+    // Broadcast to all iframes (desktop mockup and mobile fullscreen)
+    const iframes = document.querySelectorAll('iframe');
+    iframes.forEach(iframe => {
+      if (iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: 'UPDATE_PREVIEW', data: payload }, '*');
+      }
+    });
   }, [templateData, schedule, committee, previewMode]);
 
   return (
@@ -601,7 +607,10 @@ export default function RoyalBuilder() {
 
         {/* Footer Actions */}
         <div className="p-4 border-t border-brand-text/10 bg-brand-background flex justify-between items-center">
-          <button className="px-6 py-3 text-xs font-bold uppercase tracking-widest text-brand-text/60 hover:text-brand-primary">
+          <button 
+            onClick={() => setShowMobilePreview(true)}
+            className="md:hidden px-6 py-3 text-xs font-bold uppercase tracking-widest text-brand-text/60 hover:text-brand-primary"
+          >
             Preview
           </button>
           
@@ -703,111 +712,41 @@ export default function RoyalBuilder() {
         </div>
       </div>
 
-      {/* RAZORPAY STYLE CHECKOUT MODAL */}
+      {/* MOBILE FULLSCREEN PREVIEW MODAL */}
       <AnimatePresence>
-        {isCheckoutOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-              onClick={() => !isProcessing && setIsCheckoutOpen(false)}
-            />
+        {showMobilePreview && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed inset-0 z-[100] bg-white flex flex-col md:hidden"
+          >
+            <div className="flex justify-between items-center p-4 border-b border-brand-text/10 bg-brand-background shadow-sm">
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-text">Live Preview</span>
+              <button 
+                onClick={() => setShowMobilePreview(false)}
+                className="p-2 bg-brand-primary/10 text-brand-primary rounded-full hover:bg-brand-primary/20 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
             
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-[400px] bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col"
-            >
-              {/* Header */}
-              <div className="bg-[#123B2A] px-6 py-5 text-white flex justify-between items-start relative overflow-hidden">
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-[#C9963E]" />
-                    </div>
-                    <span className="font-bold tracking-widest uppercase text-xs">Vedika Platform</span>
-                  </div>
-                  <h3 className="text-xl font-serif text-[#FFF8E8]">{templateData.mainName} Pandal</h3>
-                  <p className="text-white/60 text-xs">Ganesh Royal Premium Theme</p>
-                </div>
-                <button 
-                  onClick={() => !isProcessing && setIsCheckoutOpen(false)}
-                  className="text-white/50 hover:text-white transition-colors relative z-10"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-                
-                {/* Decorative BG */}
-                <div className="absolute right-0 top-0 w-32 h-32 bg-[#C9963E]/20 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-              </div>
-              
-              {/* Content */}
-              <div className="p-6 bg-[#F9FAFB] flex-1 border-b border-gray-100">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-widest">Amount Payable</span>
-                  <span className="text-2xl font-bold text-gray-900">₹1,499</span>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Phone Number</label>
-                    <input 
-                      type="tel" 
-                      placeholder="+91 98765 43210" 
-                      className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Email (Optional)</label>
-                    <input 
-                      type="email" 
-                      placeholder="devotee@example.com" 
-                      className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
-                    />
-                  </div>
-                </div>
-                
-                <div className="mt-6 bg-blue-50/50 border border-blue-100 rounded-lg p-4 flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-blue-900/70 leading-relaxed">
-                    <strong>Lifetime Access:</strong> Publishing will generate a permanent live link and QR code. You can edit images and schedules anytime for free.
-                  </p>
-                </div>
-              </div>
-              
-              {/* Footer / Pay Button */}
-              <div className="p-6 bg-white">
-                <button 
-                  onClick={() => {
-                    setIsProcessing(true);
-                    setTimeout(() => {
-                      setIsProcessing(false);
-                      setIsCheckoutOpen(false);
-                      alert("Payment Successful! Your Vedika is now live. 🎉");
-                    }, 2500);
-                  }}
-                  disabled={isProcessing}
-                  className="w-full py-4 bg-[#123B2A] text-[#C9963E] rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-[#0a2419] transition-all flex items-center justify-center shadow-xl shadow-[#123B2A]/20 disabled:opacity-70"
-                >
-                  {isProcessing ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-[#C9963E]/30 border-t-[#C9963E] rounded-full animate-spin"></div>
-                      Processing...
-                    </div>
-                  ) : (
-                    "Pay ₹1,499 & Publish"
-                  )}
-                </button>
-                <div className="mt-4 flex items-center justify-center gap-1.5 opacity-50">
-                  <Sparkles className="w-3 h-3" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Secured by Razorpay</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+            <iframe 
+              src="/preview/ganesh-royal?mode=builder" 
+              className="w-full flex-1 border-none bg-white"
+              title="Mobile Live Template Preview"
+              onLoad={(e) => {
+                // Sync data when the mobile iframe loads
+                const iframe = e.target as HTMLIFrameElement;
+                if (iframe.contentWindow) {
+                  iframe.contentWindow.postMessage({ 
+                    type: 'UPDATE_PREVIEW', 
+                    data: { ...templateData, schedule, committee, previewMode: 'mobile' } 
+                  }, '*');
+                }
+              }}
+            />
+          </motion.div>
         )}
       </AnimatePresence>
 
