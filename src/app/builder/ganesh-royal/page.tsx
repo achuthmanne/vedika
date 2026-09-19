@@ -166,9 +166,8 @@ export default function RoyalBuilder() {
       <div className="w-full md:w-[450px] bg-brand-background h-full shadow-2xl flex flex-col relative z-10 flex-shrink-0 border-r border-brand-text/10">
         {/* Header */}
         <div className="p-6 border-b border-brand-text/10 bg-brand-background">
-          <Link href="/templates/ganesh-chaturthi" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-text/50 hover:text-brand-primary transition-colors mb-6 w-fit">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Templates
+          <Link href="/templates/ganesh-chaturthi" className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-text/5 hover:bg-brand-primary/10 text-brand-text/60 hover:text-brand-primary transition-colors mb-6">
+            <ArrowLeft className="w-4 h-4" />
           </Link>
           <h1 className="font-heading text-2xl text-brand-text">Customize Template</h1>
           <p className="text-sm text-brand-text/60 mt-1">Royal Floral Minimal (₹1,499)</p>
