@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import WhatIsVedika from "@/components/WhatIsVedika";
@@ -94,19 +95,32 @@ export default function Home() {
           >
             <WhatIsVedika />
             
-            {/* Explore Templates Banner */}
-            <div className="w-full flex justify-center px-4 mt-8">
+            {/* Explore Templates Banner Wrapper */}
+            <div className="w-full max-w-6xl mx-auto mt-40 md:mt-48 relative px-4">
+              
+              {/* Sibling 1: The Box Background (z-0) */}
+              <div className="absolute inset-0 mx-4 bg-brand-text/5 border border-brand-text/10 rounded-[2rem] pointer-events-none z-0" />
+              
+              {/* Decorative background blur */}
+              <div className="absolute top-0 right-4 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none z-0" />
+
+              {/* Sibling 2: Mascot Peeking from exactly the Top Edge (Behind the wall illusion) */}
+              {/* overflow-hidden clips the empty white space at the bottom of the image, while translate-y shifts his hands to rest exactly on the border */}
+              <div className="absolute bottom-full left-8 md:left-24 w-48 h-48 md:w-64 md:h-64 overflow-hidden pointer-events-none mix-blend-multiply opacity-95 z-10">
+                <div className="relative w-full h-full translate-y-6 md:translate-y-10">
+                  <Image src="/mascot.png" alt="Friendly Mascot" fill className="object-contain object-bottom" />
+                </div>
+              </div>
+
+              {/* Sibling 3: The Content (z-20) */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="max-w-6xl w-full bg-brand-text/5 border border-brand-text/10 rounded-[2rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left overflow-hidden relative"
+                className="w-full p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left relative z-20"
               >
-                {/* Decorative background blur */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none" />
-
-                <div className="z-10 max-w-xl">
+                <div className="z-20 max-w-xl relative mt-4 md:mt-0">
                   <h3 className="font-heading text-3xl md:text-5xl text-brand-text mb-4">
                     Discover our <span className="text-brand-primary italic">Templates.</span>
                   </h3>
@@ -118,7 +132,7 @@ export default function Home() {
                 <div className="z-10 shrink-0">
                   <Link 
                     href="/templates"
-                    className="inline-flex items-center justify-center px-8 py-5 bg-brand-text text-brand-background rounded-full font-body font-bold text-xs md:text-sm uppercase tracking-[0.15em] hover:bg-brand-primary transition-all hover:scale-105 shadow-xl hover:shadow-brand-primary/20"
+                    className="inline-flex items-center justify-center px-8 py-5 bg-brand-text text-brand-background rounded-full font-body font-bold text-xs md:text-sm uppercase tracking-[0.15em] hover:bg-brand-primary transition-all"
                   >
                     Explore Templates
                   </Link>

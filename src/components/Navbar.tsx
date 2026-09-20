@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingBag, User as UserIcon } from "lucide-react";
+import { Menu, X, ShoppingBag, User as UserIcon, Settings, LogOut } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,7 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
   const [cartOpen, setCartOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     // Check active sessions and sets the user
@@ -149,18 +150,44 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
                     <div className="w-7 h-7 bg-brand-primary text-brand-background rounded-full flex items-center justify-center font-bold text-xs">
                       {user.email?.charAt(0).toUpperCase() || 'U'}
                     </div>
-                    <button 
-                      onClick={() => supabase.auth.signOut()}
-                      className="text-[10px] font-bold uppercase tracking-widest text-brand-text/60 hover:text-brand-text px-2"
-                    >
-                      Logout
-                    </button>
+                      <div className="relative">
+                        <button 
+                          onClick={() => setSettingsOpen(!settingsOpen)}
+                          className={`text-brand-text/60 hover:text-brand-text p-1 transition-colors ${settingsOpen ? 'text-brand-text' : ''}`}
+                          title="Settings"
+                        >
+                          <Settings className="w-4 h-4" />
+                        </button>
+                        
+                        <AnimatePresence>
+                          {settingsOpen && (
+                            <motion.div 
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              transition={{ duration: 0.2 }}
+                              className="absolute right-0 top-full mt-3 w-40 bg-brand-background border border-brand-text/10 rounded-[1rem] shadow-xl overflow-hidden flex flex-col p-1.5 z-50"
+                            >
+                              <button 
+                                onClick={() => {
+                                  supabase.auth.signOut();
+                                  setSettingsOpen(false);
+                                }}
+                                className="w-full flex items-center gap-3 px-3 py-2 text-left text-sm font-medium text-brand-text/80 hover:text-brand-text hover:bg-brand-text/5 rounded-lg transition-all"
+                              >
+                                <LogOut className="w-4 h-4" />
+                                Logout
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                   </div>
                   <Link
                     href="/templates"
                     className="bg-brand-primary text-brand-background hover:bg-[#9c4632] px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
                   >
-                    Book Now
+                    Create Your Vedika
                   </Link>
                 </>
               ) : (
@@ -236,24 +263,48 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
               
               {user ? (
                 <>
-                  <div className="flex items-center justify-between mt-2 pt-4 border-t border-brand-text/10 px-4">
-                    <span className="text-sm font-medium text-brand-text/70">{user.email}</span>
-                    <button 
-                      onClick={() => {
-                        supabase.auth.signOut();
-                        setMobileMenuOpen(false);
-                      }}
-                      className="text-xs font-bold uppercase tracking-widest text-brand-text/60"
-                    >
-                      Logout
-                    </button>
-                  </div>
+                    <div className="flex items-center justify-between mt-2 pt-4 border-t border-brand-text/10 px-4">
+                      <span className="text-sm font-medium text-brand-text/70">{user.email}</span>
+                      <div className="relative">
+                        <button 
+                          onClick={() => setSettingsOpen(!settingsOpen)}
+                          className={`text-brand-text/60 hover:text-brand-text p-2 ${settingsOpen ? 'text-brand-text' : ''}`}
+                          title="Settings"
+                        >
+                          <Settings className="w-5 h-5" />
+                        </button>
+                        
+                        <AnimatePresence>
+                          {settingsOpen && (
+                            <motion.div 
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              transition={{ duration: 0.2 }}
+                              className="absolute right-0 bottom-full mb-3 w-40 bg-brand-background border border-brand-text/10 rounded-[1rem] shadow-xl overflow-hidden flex flex-col p-1.5 z-50"
+                            >
+                              <button 
+                                onClick={() => {
+                                  supabase.auth.signOut();
+                                  setSettingsOpen(false);
+                                  setMobileMenuOpen(false);
+                                }}
+                                className="w-full flex items-center gap-3 px-3 py-2 text-left text-sm font-medium text-brand-text/80 hover:text-brand-text hover:bg-brand-text/5 rounded-lg transition-all"
+                              >
+                                <LogOut className="w-4 h-4" />
+                                Logout
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
                   <Link
                     href="/templates"
                     onClick={() => setMobileMenuOpen(false)}
                     className="mt-2 bg-brand-primary text-brand-background px-6 py-3.5 w-full block text-center rounded-full text-base font-semibold transition-all duration-300 shadow-md cursor-pointer"
                   >
-                    Book Now
+                    Create Your Vedika
                   </Link>
                 </>
               ) : (

@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { supabase } from "@/lib/supabase";
 
@@ -30,6 +31,10 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
     if (isOpen) {
       const fetchOrders = async () => {
         setLoading(true);
+        
+        // Artificial delay so the user can enjoy the custom cart animation!
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
         const { data, error } = await supabase
           .from('orders')
           .select('*')
@@ -84,24 +89,49 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6">
-              {loading ? (
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <div className="w-8 h-8 border-2 border-brand-primary border-t-transparent rounded-full animate-spin mb-4" />
-                  <p className="text-brand-text/50">Loading purchases...</p>
-                </div>
-              ) : orders.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center opacity-60">
-                  <ShoppingBag className="w-12 h-12 mb-4 text-brand-text/20" />
-                  <p className="text-brand-text/70">No recent purchases found.</p>
-                  <Link 
-                    href="/templates"
-                    onClick={onClose}
-                    className="mt-6 text-xs font-bold uppercase tracking-widest text-brand-primary"
-                  >
-                    Explore Templates
-                  </Link>
-                </div>
-              ) : (
+                {loading ? (
+                  <div className="flex flex-col items-center justify-center h-full w-full px-8 text-center">
+                    <div className="relative w-full max-w-[200px] h-16 mb-4">
+                      {/* The Road / Loading Bar */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-brand-text/10 rounded-full overflow-hidden">
+                        <motion.div 
+                          className="h-full bg-brand-primary"
+                          initial={{ width: "0%" }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+                        />
+                      </div>
+                      
+                      {/* The Cart Vehicle driving on the road */}
+                      {/* x: -85% ensures the loading bar tip perfectly touches the front tire inside the image padding */}
+                      <motion.div
+                        className="absolute bottom-1.5 w-12 h-12"
+                        initial={{ left: "0%" }}
+                        animate={{ left: "100%" }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+                        style={{ x: "-85%" }}
+                      >
+                        <Image src="/cart.png" alt="Loading Cart" fill className="object-contain" />
+                      </motion.div>
+                    </div>
+                    <p className="text-brand-text/50 font-medium text-sm uppercase tracking-widest">Getting your orders...</p>
+                  </div>
+                ) : orders.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full text-center">
+                    <div className="relative w-24 h-24 mb-6 opacity-40 grayscale">
+                      <Image src="/cart.png" alt="Empty Cart" fill className="object-contain" />
+                    </div>
+                    <p className="text-brand-text/70 font-medium text-lg mb-2">Your cart feels a bit empty.</p>
+                    <p className="text-brand-text/50 text-sm mb-8 px-4">Looks like you haven't made any recent purchases yet.</p>
+                    <Link 
+                      href="/templates"
+                      onClick={onClose}
+                      className="px-8 py-3 bg-brand-text text-brand-background rounded-full text-xs font-bold uppercase tracking-[0.15em] hover:bg-brand-primary transition-colors"
+                    >
+                      Explore Templates
+                    </Link>
+                  </div>
+                ) : (
                 <div className="flex flex-col gap-4">
                   {orders.map((order, i) => (
                     <div key={i} className="bg-brand-text/5 border border-brand-text/10 rounded-2xl p-5 relative overflow-hidden group">
