@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
+import AuthModal from "@/components/AuthModal";
 
 function CheckoutContent() {
   const router = useRouter();
@@ -23,18 +24,44 @@ function CheckoutContent() {
   const [copied, setCopied] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session?.user) {
-        alert("Please sign in to continue with your booking.");
-        router.push("/?section=explore");
-      } else {
+    checkAuth();
+
+    // Listen for auth changes (if they log in via the modal)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
         setUser(session.user);
+        setAuthModalOpen(false);
+        setIsAuthorized(true);
+        setIsLoadingAuth(false);
       }
-      setIsLoadingAuth(false);
     });
-  }, [router]);
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const checkAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) {
+      setAuthModalOpen(true);
+      setIsLoadingAuth(false);
+    } else {
+      setUser(session.user);
+      setIsAuthorized(true);
+      setIsLoadingAuth(false);
+    }
+  };
+
+  const handleCloseAuth = () => {
+    setAuthModalOpen(false);
+    if (!isAuthorized) {
+      router.push("/?section=explore");
+    }
+  };
 
   const copyToClipboard = async () => {
     try {
@@ -58,6 +85,7 @@ function CheckoutContent() {
         .insert([
           {
             user_id: user.id,
+            email: user.email,
             whatsapp_number: phone,
             utr_number: utr,
             amount: amount,
@@ -217,30 +245,31 @@ function CheckoutContent() {
                 
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-widest text-brand-text/60 mb-2">
-                    12-Digit Transaction ID / UTR <span className="text-brand-primary">*</span>
+                    Transaction ID / UTR <span className="text-brand-primary">*</span>
                   </label>
                   <input 
                     type="text" 
                     required
-                    maxLength={12}
-                    minLength={12}
-                    pattern="[0-9]{12}"
                     value={utr}
-                    onChange={(e) => {
-                      const val = e.target.value.replace(/[^0-9]/g, '');
-                      setUtr(val);
-                    }}
-                    placeholder="e.g. 321456789012" 
+                    onChange={(e) => setUtr(e.target.value)}
+                    placeholder="e.g. 321456789012 or T2309..." 
                     className="w-full bg-brand-background border border-brand-text/20 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-brand-primary transition-colors placeholder:text-brand-text/30"
                   />
                 </div>
 
                 <button 
                   type="submit"
-                  disabled={isProcessing || phone.length !== 10 || utr.length !== 12}
-                  className="w-full py-4 mt-2 bg-brand-text text-brand-background rounded-xl font-body font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-primary transition-colors disabled:opacity-40"
+                  disabled={isProcessing || phone.length !== 10 || utr.length < 6}
+                  className="w-full py-4 mt-2 bg-brand-text text-brand-background rounded-xl font-body font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-primary transition-colors disabled:opacity-40 flex items-center justify-center gap-2"
                 >
-                  {isProcessing ? "Verifying..." : "Confirm Payment"}
+                  {isProcessing ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-brand-background border-t-transparent rounded-full animate-spin" />
+                      Verifying...
+                    </>
+                  ) : (
+                    "Confirm Payment"
+                  )}
                 </button>
                 
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-[12px] sm:text-[13px] font-semibold text-brand-text/90">
@@ -259,6 +288,9 @@ function CheckoutContent() {
         </div>
         
       </div>
+      
+      {/* Global Auth Modal */}
+      <AuthModal isOpen={authModalOpen} onClose={handleCloseAuth} />
     </div>
   );
 }

@@ -169,6 +169,20 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                         </div>
                       </div>
 
+                      {(order.status === 'REJECTED' || order.status === 'DISAPPROVED') && order.rejection_reason && (
+                        <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-red-600 mb-1">Reason for Rejection</p>
+                          <p className="text-red-700 text-xs font-medium mb-3">{order.rejection_reason}</p>
+                          <Link 
+                            href={`/checkout?plan=${encodeURIComponent(order.plan_name)}&amount=${order.amount}`}
+                            onClick={onClose}
+                            className="inline-block px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-bold transition-colors hover:bg-red-600 w-full text-center"
+                          >
+                            RETRY PAYMENT
+                          </Link>
+                        </div>
+                      )}
+
                     </div>
                   ))}
                 </div>

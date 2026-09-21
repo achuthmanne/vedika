@@ -18,6 +18,8 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [badgeColor, setBadgeColor] = useState("bg-amber-500");
 
   useEffect(() => {
     // Check active sessions and sets the user
@@ -33,6 +35,38 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      const fetchCartOrders = async () => {
+        const { data, error } = await supabase
+          .from('orders')
+          .select('status, created_at')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+        
+        if (!error && data) {
+          setCartCount(data.length);
+          
+          // Determine dynamic color based on the LATEST order's status
+          if (data.length > 0) {
+            const latestStatus = data[0].status;
+            
+            if (latestStatus === 'DISAPPROVED' || latestStatus === 'REJECTED') {
+              setBadgeColor("bg-red-500");
+            } else if (latestStatus === 'APPROVED') {
+              setBadgeColor("bg-green-500");
+            } else {
+              setBadgeColor("bg-amber-500"); // Default for Pending
+            }
+          }
+        }
+      };
+      fetchCartOrders();
+    } else {
+      setCartCount(0);
+    }
+  }, [user]);
   
   const threshold = 300;
   const isScrolledPast = scrollY >= threshold;
@@ -140,12 +174,17 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
             <div className="hidden lg:flex items-center gap-4">
               {user ? (
                 <>
-                  <button
-                    onClick={() => setCartOpen(true)}
-                    className="p-2.5 bg-brand-text/5 text-brand-text rounded-full hover:bg-brand-text/10 transition-colors shadow-sm"
-                  >
-                    <ShoppingBag className="w-4 h-4" />
-                  </button>
+                    <button
+                      onClick={() => setCartOpen(true)}
+                      className="p-2.5 bg-brand-text/5 text-brand-text rounded-full hover:bg-brand-text/10 transition-colors shadow-sm relative"
+                    >
+                      <ShoppingBag className="w-4 h-4" />
+                      {cartCount > 0 && (
+                        <span className={`absolute -top-1 -right-1 w-4 h-4 ${badgeColor} text-white rounded-full text-[9px] font-bold flex items-center justify-center border border-white`}>
+                          {cartCount}
+                        </span>
+                      )}
+                    </button>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-brand-text/5 rounded-full border border-brand-text/10">
                     <div className="w-7 h-7 bg-brand-primary text-brand-background rounded-full flex items-center justify-center font-bold text-xs">
                       {user.email?.charAt(0).toUpperCase() || 'U'}
@@ -207,7 +246,18 @@ export default function Navbar({ onExploreClick, isCompact = false, scrollY = 0 
                   onClick={() => user ? setCartOpen(true) : setAuthModalOpen(true)}
                   className="p-2 text-brand-text flex items-center justify-center cursor-pointer relative"
                 >
-                  {user ? <ShoppingBag className="w-5 h-5" /> : <UserIcon className="w-5 h-5" />}
+                  {user ? (
+                    <>
+                      <ShoppingBag className="w-5 h-5" />
+                      {cartCount > 0 && (
+                        <span className={`absolute top-0 right-0 w-4 h-4 ${badgeColor} text-white rounded-full text-[9px] font-bold flex items-center justify-center border border-white`}>
+                          {cartCount}
+                        </span>
+                      )}
+                    </>
+                  ) : (
+                    <UserIcon className="w-5 h-5" />
+                  )}
                 </button>
                 <button 
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

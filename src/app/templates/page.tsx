@@ -15,6 +15,7 @@ const TEMPLATES = [
     price: "₹1499",
     image: "/ganesh-thumbnail.png",
     demoLink: "/preview/ganesh-royal",
+    builderLink: "/builder/ganesh-royal",
     tag: "Trending",
     status: "ready",
     category: "Festivals",
@@ -279,20 +280,20 @@ export default function TemplatesPage() {
                   </p>
 
                   {/* Actions */}
-                  <div className="mt-auto flex items-center gap-4">
-                    <button 
-                      onClick={() => router.push(`/checkout?plan=${encodeURIComponent(template.title)}&amount=${template.price.replace('₹', '')}`)}
-                      className="flex-1 py-4 bg-brand-text text-brand-background rounded-full font-body font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-primary transition-colors text-center"
-                    >
-                      Book Now
-                    </button>
-                    <Link 
-                      href={template.demoLink}
-                      className="flex items-center justify-center gap-2 px-6 py-4 border border-brand-text/20 text-brand-text rounded-full font-body font-bold text-xs uppercase tracking-[0.15em] hover:border-brand-text hover:bg-brand-text/5 transition-all"
-                    >
-                      Demo <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
+                    <div className="mt-auto flex items-center gap-4">
+                      <button 
+                        onClick={() => router.push(template.builderLink || template.demoLink)}
+                        className="flex-1 py-4 bg-brand-text text-brand-background rounded-full font-body font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] hover:bg-brand-primary transition-colors text-center"
+                      >
+                        Customize & Book
+                      </button>
+                      <Link 
+                        href={template.demoLink}
+                        className="flex items-center justify-center gap-2 px-6 py-4 border border-brand-text/20 text-brand-text rounded-full font-body font-bold text-xs uppercase tracking-[0.15em] hover:border-brand-text hover:bg-brand-text/5 transition-all"
+                      >
+                        Demo <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </div>
                 </div>
               </motion.div>
             ))}
