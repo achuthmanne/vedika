@@ -171,15 +171,18 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                       </div>
 
                       {(order.status === 'REJECTED' || order.status === 'DISAPPROVED') && order.rejection_reason && (
-                        <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-red-600 mb-1">Reason for Rejection</p>
-                          <p className="text-red-700 text-xs font-medium mb-3">{order.rejection_reason}</p>
+                        <div className="mt-4 p-4 bg-brand-text/5 border-l-2 border-l-red-500 rounded-r-xl">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-text/50 mb-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3 text-red-500" />
+                            Reason for Rejection
+                          </p>
+                          <p className="text-brand-text text-sm font-medium mb-4 pl-4 border-l border-brand-text/10 ml-1.5 py-1">{order.rejection_reason}</p>
                           <Link 
                             href={`/checkout?plan=${encodeURIComponent(order.plan_name)}&amount=${order.amount}`}
                             onClick={onClose}
-                            className="inline-block px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-bold transition-colors hover:bg-red-600 w-full text-center"
+                            className="inline-block px-4 py-3 bg-brand-text text-brand-background rounded-xl text-xs font-bold transition-colors hover:bg-brand-text/90 w-full text-center uppercase tracking-wider"
                           >
-                            RETRY PAYMENT
+                            Retry Payment
                           </Link>
                         </div>
                       )}
