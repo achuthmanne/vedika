@@ -16,6 +16,7 @@ interface Order {
   status: string;
   created_at: string;
   utr_number: string;
+  rejection_reason?: string;
 }
 
 export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
