@@ -23,6 +23,8 @@ export async function POST(request: Request) {
           <p>Great news! We have successfully received and verified your payment for the <strong>${plan_name}</strong>.</p>
           <p>Your beautiful digital invitation is now Live. You can share it with your family and friends!</p>
           <br/>
+          <a href="https://www.myvedika.online" style="background-color: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">View Your Vedika</a>
+          <br/><br/>
           <p>Thank you for choosing Vedika.</p>
         </div>
       `;
@@ -37,6 +39,8 @@ export async function POST(request: Request) {
           </div>
           <p>Please log in to your account and try submitting the payment details again from your cart.</p>
           <br/>
+          <a href="https://www.myvedika.online" style="background-color: #111827; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Login to Retry Payment</a>
+          <br/><br/>
           <p>If you think this is a mistake, please reply to this email.</p>
           <p>Thank you.</p>
         </div>
