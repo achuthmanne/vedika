@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     }
 
     const data = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'Vedika <hello@myvedika.online>',
       to: [email],
       subject: subject,
       html: htmlContent,
